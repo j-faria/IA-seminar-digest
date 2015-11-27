@@ -49,9 +49,17 @@ def get_info_from_gcalendar(datein=None):
 	individual_events = re.findall('BEGIN:VEVENT.*?END:VEVENT', content, flags=re.DOTALL)
 
 	for event in individual_events:
+
+		desc = re.findall('DESCRIPTION:.*?LAST-MODIFIED', event, flags=re.DOTALL)[0]
+		desc = desc[12:-13]
+		presenter = desc[:desc.find('\\n')]
+
+		abstract = desc[desc.find('\\n'):]
+		abstract = abstract.replace('\r\n ', '').replace('\\n', '').replace('\,', ',')
+		
 		for line in event.split('\n'):
 			line = line.strip()
-			print line
+			# print line
 
 			if line.startswith('DTSTART:'):
 				dtstart = line[8:].strip()
@@ -66,15 +74,8 @@ def get_info_from_gcalendar(datein=None):
 				title = line[8:].strip()
 
 		if time.strftime('%d-%m-%Y', dtstart) == datein:
+			print presenter
+			print abstract
 			break
-
-
-
-	# remove the "DESCRIPTION:"
-	description = description[12:]
-
-	# remove trailing \n
-	description = description.strip()
-	presenter, abstract = description.split('\\n')
 
 	return title, presenter, abstract, starttime, dtstart, location, icslink

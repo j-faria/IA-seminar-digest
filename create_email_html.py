@@ -53,6 +53,7 @@ while True:
     seminar_content += '<a href="%s">Google Calendar</a>\n' % link
 
     seminar_content += '<hr />\n'
+    seminar_content += '<hr />\n'
     seminar_content += '<br />\n'
 
     print '\n'
