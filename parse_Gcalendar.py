@@ -55,8 +55,14 @@ def get_info_from_gcalendar(datein=None):
 		presenter = desc[:desc.find('\\n')]
 
 		abstract = desc[desc.find('\\n'):]
-		abstract = abstract.replace('\r\n ', '').replace('\\n', '').replace('\,', ',')
+		abstract = abstract.replace('\r\n ', '').replace('\\n', '').replace('\,', ',').replace('\;', ';')
+
+		summary = re.findall('SUMMARY:.*?TRANSP', event, flags=re.DOTALL)[0]
+		summary = summary[8:-6]
+		# print repr(summary)
+		summary = summary.replace('\r\n ', '').replace('\r\n', '').replace('\\n', '').replace('\,', ',')
 		
+
 		for line in event.split('\n'):
 			line = line.strip()
 			# print line
@@ -66,14 +72,17 @@ def get_info_from_gcalendar(datein=None):
 				dtstart = time.strptime(dtstart, '%Y%m%dT%H%M00Z')
 				starttime = time.strftime('%d/%m/%Y, %H:%M', dtstart)
 			
-			if line.startswith('DESCRIPTION:'): 
-				description = line
+			# if line.startswith('DESCRIPTION:'): 
+				# description = line
 			if line.startswith('LOCATION:'):
 				location = line[9:].strip()
-			if line.startswith('SUMMARY:'):
-				title = line[8:].strip()
+			# if line.startswith('SUMMARY:'):
+				# title = line[8:].strip()
 
+		title = summary
 		if time.strftime('%d-%m-%Y', dtstart) == datein:
+			print 
+			print summary
 			print presenter
 			print abstract
 			break
