@@ -10,10 +10,17 @@ IA_pole = 'Porto'
 # download the updated ICS file from the Google calendar
 update_calendarICS()
 
-today = datetime.now()
-start = today - timedelta(days=today.weekday())
-end = start + timedelta(days=4)
-weekdates = start.strftime('%d/%b/%Y') + ' -- ' + end.strftime('%d/%b/%Y')
+
+def get_week_dates(today=None):
+    if today is None:
+        today = datetime.now()
+
+    start = today - timedelta(days=today.weekday())
+    end = start + timedelta(days=4)
+    weekdates = start.strftime('%d/%b/%Y') + ' -- ' + end.strftime('%d/%b/%Y')
+    return start, end, weekdates
+
+start, end, weekdates = get_week_dates()
 fileid = 'WeekDigest.' + start.strftime('%d%b%Y') + '.' + end.strftime('%d%b%Y') + '.html'
 
 if IA_pole == 'Porto':
@@ -37,13 +44,20 @@ google_calendar_link+= '&sf=true&output=xml'
 
 
 seminar_content = ''
+iteration = 0
 
 while True:
     datein = raw_input('Date of the seminar (DD-MM-YYYY) [empty to stop]: ')
     if datein == '':
         break
 
-    title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein)
+    if iteration == 0:
+        date_of_week = datetime.strptime(datein, '%d-%m-%Y')
+        start, end, weekdates = get_week_dates(today=date_of_week)
+        fileid = 'WeekDigest.' + start.strftime('%d%b%Y') + '.' + end.strftime('%d%b%Y') + '.html'
+        print fileid
+
+    title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole)
     link = ''
 
     seminar_content += '<h9><b>%s</b></h9> <br />\n' % title
