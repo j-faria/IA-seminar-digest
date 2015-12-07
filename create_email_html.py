@@ -2,6 +2,12 @@ from parse_Gcalendar import *
 from datetime import datetime, timedelta
 import sys
 
+# select one of the following:
+IA_pole = 'Porto'
+# IA_pole = 'Lisbon'
+
+
+# download the updated ICS file from the Google calendar
 update_calendarICS()
 
 today = datetime.now()
@@ -10,6 +16,15 @@ end = start + timedelta(days=4)
 weekdates = start.strftime('%d/%b/%Y') + ' -- ' + end.strftime('%d/%b/%Y')
 fileid = 'WeekDigest.' + start.strftime('%d%b%Y') + '.' + end.strftime('%d%b%Y') + '.html'
 
+if IA_pole == 'Porto':
+    with open('email_template_Porto.html') as f:
+        email_template = f.read()
+elif IA_pole == 'Lisbon':
+    with open('email_template_Lisbon.html') as f:
+        email_template = f.read()
+else:
+    print 'IA_pole must be "Porto" or "Lisbon".'
+    sys.exit(1)
 
 
 
