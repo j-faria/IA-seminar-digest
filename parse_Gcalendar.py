@@ -1,5 +1,5 @@
 import urllib2
-import os
+# import os
 import time
 import re
 
@@ -7,26 +7,30 @@ icslink = ''
 
 def update_calendarICS():
 	global icslink
-	calendarID = '2da6ql82pi4n8l4647026r5uvc%40group.calendar.google.com'
+	calendarIDs = {'Porto': '2da6ql82pi4n8l4647026r5uvc%40group.calendar.google.com',
+				   'Lisbon': '6hreagfouvnitoo2sbtgpml9pc%40group.calendar.google.com',
+				   }
+
+	for loc, calendarID in calendarIDs.items():
+		icslink  = 'https://calendar.google.com/calendar/ical/'
+		icslink += calendarID
+		icslink += '/public/full/'
+		# icslink += eventID
+		# icslink += '.ics'
+		icslink += 'basic.ics'
 	
-	icslink  = 'https://calendar.google.com/calendar/ical/'
-	icslink += calendarID
-	icslink += '/public/full/'
-	# icslink += eventID
-	# icslink += '.ics'
-	icslink += 'basic.ics'
-	
 
-	# if not os.path.exists(eventID+'.ics'):
-	response = urllib2.urlopen(icslink)
-	content = response.read()
-	with open('IAseminars.ics', 'w') as f:
-		f.write(content)
+		# if not os.path.exists(eventID+'.ics'):
+		response = urllib2.urlopen(icslink)
+		content = response.read()
+		filename = 'IAseminars%s.ics' % loc
+		with open(filename, 'w') as f:
+			f.write(content)
 
-	print 'Calendar file up to date'
+		print '%s calendar file up to date' % loc
 
 
-def get_info_from_gcalendar(datein=None):
+def get_info_from_gcalendar(datein=None, pole=None):
 	global icslink
 	if datein is None:
 		datein = raw_input('Date of the seminar: (DD-MM-YYY) ')
@@ -41,7 +45,11 @@ def get_info_from_gcalendar(datein=None):
 	# eventID = link[ind+6:]
 	# print 'eID = ', eventID
 
-	with open('IAseminars.ics') as f:
+	if pole is None:
+		raise ValueError('Please provide the IA pole as argument.')
+
+	filename = 'IAseminars%s.ics' % pole
+	with open(filename) as f:
 	    content = f.read()
 
 
