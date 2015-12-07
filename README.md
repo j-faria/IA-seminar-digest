@@ -7,16 +7,16 @@
 	In the title of the event put  
 	  (S) Title  
 	  (CS) Title  
-	  (PC) Title
+	  (PC) Title  
 	depending if it is a Seminar, a Cookie Seminar or the Programmers Club.
 
 	In the location field put  
-	Auditorium
-	1st floor classroom
-	OAL
-	FCUL (CX.Y.ZZ)
+	Auditorium  
+	1st floor classroom  
+	OAL  
+	FCUL (CX.Y.ZZ)  
 
-	Remember to add it to either the 'IA-UPORTO-seminars' or the 'IA-LISBON-seminars' calendar !
+	Remember to add it to either the **IA-UPORTO-seminars** or the **IA-LISBON-seminars** calendar !
 
 	In the description put  
 	Name of presenter (affiliation) (new line)  
