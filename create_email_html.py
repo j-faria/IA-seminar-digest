@@ -57,14 +57,14 @@ while True:
         fileid = 'WeekDigest.' + start.strftime('%d%b%Y') + '.' + end.strftime('%d%b%Y') + '.html'
         print fileid
 
-    title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole)
+    title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, PC=False)
     link = ''
 
     seminar_content += '<h9><b>%s</b></h9> <br />\n' % title
     seminar_content += '<h9>%s</h9> <br />\n' % presenter
     seminar_content += '<p>%s</p>\n' % abstract
     seminar_content += '<br />\n'
-    seminar_content += '<i>%s, %s</i>\n' % (location, startime)
+    seminar_content += '<b><i>%s, %s</i></b>\n' % (location, startime)
     seminar_content += '<br />\n'
 
     datestart = time.strftime('%Y%m%dT%H%M00Z', dtstart)
@@ -100,14 +100,14 @@ if IA_pole == 'Porto':
 
         datein = raw_input('Date of the programmers club (DD-MM-YYYY): ')
 
-        title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole)
+        title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, PC=True)
         link = ''
 
         progclub_content += '<h9><b>%s</b></h9> <br />\n' % title
         progclub_content += '<h9>%s</h9> <br />\n' % presenter
         progclub_content += '<p>%s</p>\n' % abstract
         progclub_content += '<br />\n'
-        progclub_content += '<i>%s, %s</i>\n' % (location, startime)
+        progclub_content += '<b><i>%s, %s</i></b>\n' % (location, startime)
         progclub_content += '<br />\n'
 
         datestart = time.strftime('%Y%m%dT%H%M00Z', dtstart)
@@ -133,7 +133,7 @@ if IA_pole == 'Porto':
     else:
         email_template = email_template.replace('{{programmersclub}}', '\n')
 
-# print email_template
+# print repr(email_template)
 
 # inline the CSS
 from premailer import transform
