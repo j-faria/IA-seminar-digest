@@ -70,7 +70,7 @@ def get_info_from_gcalendar(datein=None, pole=None, PC=False):
 		# print repr(summary)
 		summary = summary.replace('\r\n ', '').replace('\r\n', '').replace('\\n', '').replace('\,', ',')
 		
-		print PC, summary
+		# print PC, summary
 		if PC:  # we are looking for a programmers club
 			if '(PC)' in summary:
 				pass
