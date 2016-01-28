@@ -30,7 +30,7 @@ def update_calendarICS():
 		print '%s calendar file up to date' % loc
 
 
-def get_info_from_gcalendar(datein=None, pole=None, PC=False):
+def get_info_from_gcalendar(datein=None, pole=None, type_of_event='S'):
 	global icslink
 	if datein is None:
 		datein = raw_input('Date of the seminar: (DD-MM-YYY) ')
@@ -70,15 +70,15 @@ def get_info_from_gcalendar(datein=None, pole=None, PC=False):
 		# print repr(summary)
 		summary = summary.replace('\r\n ', '').replace('\r\n', '').replace('\\n', '').replace('\,', ',')
 		
-		# print PC, summary
-		if PC:  # we are looking for a programmers club
+		# print type_of_event, summary
+		if type_of_event == 'PC':  # we are looking for a programmers club
 			if '(PC)' in summary:
 				pass
 			else:
 				continue
 
-		if not PC:  # we are looking for a programmers club
-			if '(S)' in summary:
+		if type_of_event == 'S':  # we are looking for a seminar
+			if '(S)' in summary or '(CS)' in summary:
 				pass
 			else:
 				continue

@@ -57,7 +57,7 @@ while True:
         fileid = 'WeekDigest.' + start.strftime('%d%b%Y') + '.' + end.strftime('%d%b%Y') + '.html'
         print fileid
 
-    title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, PC=False)
+    title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, type_of_event='S')
     link = ''
 
     seminar_content += '<h9><b>%s</b></h9> <br />\n' % title
@@ -100,7 +100,7 @@ if IA_pole == 'Porto':
 
         datein = raw_input('Date of the programmers club (DD-MM-YYYY): ')
 
-        title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, PC=True)
+        title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, type_of_event='PC')
         link = ''
 
         progclub_content += '<h9><b>%s</b></h9> <br />\n' % title
