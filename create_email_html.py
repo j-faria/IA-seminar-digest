@@ -133,16 +133,70 @@ if IA_pole == 'Porto':
     else:
         email_template = email_template.replace('{{programmersclub}}', '\n')
 
+
+if IA_pole == 'Porto':
+    extra_content = ''
+    extra = raw_input('Anything else going on? (y/[n]) ')
+    if extra == 'y':
+
+        extra_content += '<table>\n'
+        extra_content += '<td><br>\n'
+        extra_content += '  <p class="lead">In addition, the following events are also scheduled for this week.</p>\n'
+        extra_content += '  <dl>\n'
+
+        datein = raw_input('Date of the event (DD-MM-YYYY): ')
+
+        title, presenter, abstract, startime, dtstart, location, icslink = get_info_from_gcalendar(datein, IA_pole, type_of_event='other')
+
+        extra_event = ''
+        extra_event += '      <dt><h9><b>%s</b></h9> <br></dt>\n' % title
+        extra_event += '       <dd><h9>%s</h9> <br>\n' % presenter
+        extra_event += '       <b><i>%s, %s</i></b>\n' % (location, startime)
+        extra_event += '       <br />\n'
+
+        datestart = time.strftime('%Y%m%dT%H%M00Z', dtstart)
+        end = datetime(*dtstart[:6])+timedelta(hours=1)
+        dateend = end.strftime('%Y%m%dT%H%M00Z')
+        link = google_calendar_link % (title, datestart, dateend, presenter, location)
+        # print link
+        extra_event += 'Save this event to your calendar:\n'
+        # progclub_content += '<a href="%s">Outlook</a> -- \n' % icslink
+        # progclub_content += '<a href="%s">iCalendar</a> -- \n' % icslink
+        extra_event += '<a href="%s">Google Calendar</a>\n' % link
+        extra_event += '       </dd>\n'
+
+
+        extra_content += extra_event
+        extra_content += '  </dl>\n'
+        extra_content += '  <hr style="background-color:#d9d9d9; border:none; color:#d9d9d9; height:1px" bgcolor="#d9d9d9" height="1">\n'
+        extra_content += '  <hr style="background-color:#d9d9d9; border:none; color:#d9d9d9; height:1px" bgcolor="#d9d9d9" height="1">\n'
+        extra_content += '</td>\n'
+        extra_content += '</table>'
+
+        email_template = email_template.replace('{{extrathings}}', extra_content)
+
+    else:
+        email_template = email_template.replace('{{extrathings}}', '\n')
+
+
+
+if (seminar_content=='' and progclub_content=='' and extra_content==''):
+    print 
+    print 'It seems there is nothing happening...'
+    sys.exit(0)
+
+
 # print repr(email_template)
 email_template = unicode(email_template, 'utf8', 'replace')
 
 # inline the CSS
 from premailer import transform
 email_template = transform(email_template)
-
+print 'Successfully inlined CSS'
 
 
 with open(fileid, 'w') as f:
-    f.write(email_template)
+    f.write(email_template.encode('utf8'))
+    # f.write(email_template)
 
 print 'Created the file %s' % fileid
