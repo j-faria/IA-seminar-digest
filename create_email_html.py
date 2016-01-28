@@ -134,6 +134,7 @@ if IA_pole == 'Porto':
         email_template = email_template.replace('{{programmersclub}}', '\n')
 
 # print repr(email_template)
+email_template = unicode(email_template, 'utf8', 'replace')
 
 # inline the CSS
 from premailer import transform
