@@ -11,19 +11,19 @@
 	depending if it is a Seminar, a Cookie Seminar or the Programmers Club.
 
 	In the location field put  
-	Auditorium  
-	1st floor classroom  
+	CAUP Auditorium  
+	CAUP classroom  
 	OAL  
 	FCUL (CX.Y.ZZ)  
 
-	Remember to add it to either the **IA-UPORTO-seminars** or the **IA-LISBON-seminars** calendar !
+	Remember to add it to the **IA-seminars** calendar !
 
 	In the description put  
 	Name of presenter (affiliation) (new line)  
 	Abstract
 
 - Save the event
-- In the `create_email_html.py` script make sure the correct IA pole is set.
+- ~~In the `create_email_html.py` script make sure the correct IA pole is set.~~
 - Run `python create_email_html.py` and enter the dates for the seminars of that week. 
 - If you use Thunderbird:  
 	- Open the html file created by `create_email_html.py` (with a text editor, not a browser!)
