@@ -7,8 +7,8 @@ icslink = ''
 
 def update_calendarICS():
 	global icslink
-	calendarIDs = {'Porto': '2da6ql82pi4n8l4647026r5uvc%40group.calendar.google.com',
-				   'Lisbon': '6hreagfouvnitoo2sbtgpml9pc%40group.calendar.google.com',
+	calendarIDs = {'IA': '2da6ql82pi4n8l4647026r5uvc%40group.calendar.google.com',
+				   #'Lisbon': '6hreagfouvnitoo2sbtgpml9pc%40group.calendar.google.com',
 				   }
 
 	for loc, calendarID in calendarIDs.items():
@@ -61,6 +61,9 @@ def get_info_from_gcalendar(datein=None, pole=None, type_of_event='S'):
 		desc = re.findall('DESCRIPTION:.*?LAST-MODIFIED', event, flags=re.DOTALL)[0]
 		desc = desc[12:-13]
 		presenter = desc[:desc.find('\\n')]
+		# presenter = presenter.encode('string_escape')
+		presenter = presenter.replace('\r\n ', '').replace('\,', ',')
+		# print repr(presenter)
 
 		abstract = desc[desc.find('\\n'):]
 		abstract = abstract.replace('\r\n ', '').replace('\\n', '').replace('\,', ',').replace('\;', ';')
